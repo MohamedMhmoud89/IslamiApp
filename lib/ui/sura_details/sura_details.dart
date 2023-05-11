@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islami/ui/sura_details/sura_contant.dart';
+
 class SuraDetailsScreen extends StatefulWidget {
   static const routename = "sura_details";
 
@@ -13,9 +14,9 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)?.settings.arguments as SuraDetailsScreenArgs;
-    if(suraContent.isEmpty)
-    ReadFile(args.index);
+    var args =
+        ModalRoute.of(context)?.settings.arguments as SuraDetailsScreenArgs;
+    if (suraContent.isEmpty) ReadFile(args.index);
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -25,32 +26,35 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            args.title
-          ),
+          title: Text(args.title),
         ),
         body: Column(
           children: [
             Expanded(
-              child:
-              Card(
+              child: Card(
                 elevation: 50,
-                margin: EdgeInsets.symmetric(horizontal: 12,vertical: 48),
+                margin: EdgeInsets.symmetric(horizontal: 12, vertical: 48),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
                 color: Color(0x90F8F8F8),
-                child: ListView.separated(itemBuilder: (buildContext, index){
-                  return SuraContant(suraContent[index],);
-                }, itemCount: suraContent.length,
-                separatorBuilder: (buildContext,index){
-                  return Container(
-                    color: Theme.of(context).primaryColor,
-                    height: 1,
-                    width: double.infinity,
-                    margin: EdgeInsets.symmetric(horizontal: 25,vertical: 15),
-                  );
-                },),
+                child: ListView.separated(
+                  itemBuilder: (buildContext, index) {
+                    return SuraContant(
+                      suraContent[index],
+                    );
+                  },
+                  itemCount: suraContent.length,
+                  separatorBuilder: (buildContext, index) {
+                    return Container(
+                      color: Theme.of(context).primaryColor,
+                      height: 1,
+                      width: double.infinity,
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -59,14 +63,16 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
     );
   }
 
-  void ReadFile(int chapterIndex) async{
-    String text = await rootBundle.loadString('assets/files/${chapterIndex+1}.txt');
+  void ReadFile(int chapterIndex) async {
+    String text =
+        await rootBundle.loadString('assets/files/${chapterIndex + 1}.txt');
     suraContent = text.split('\n');
-    setState(() {
-    });
+    setState(() {});
   }
 }
-class SuraDetailsScreenArgs { //Data Class
+
+class SuraDetailsScreenArgs {
+  //Data Class
   String title;
   int index;
   SuraDetailsScreenArgs(this.index, this.title);
